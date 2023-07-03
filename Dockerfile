@@ -13,3 +13,5 @@ COPY . .
 EXPOSE 3000
 
 CMD ["node", "server.js"]
+
+# TERRIBLE CHANGES HAVE BEEN MADE
