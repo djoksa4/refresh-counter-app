@@ -5,20 +5,16 @@ services:
     image: mongo
     ports:
       - 27017:27017
-    networks:
-      - counter-net
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
-      - mongodb-data:/data/db
+      - AFSMount:/data/db
 
   my-mongo-ui:
     image: mongo-express
     ports:
       - 8081:8081
-    networks:
-      - counter-net
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
@@ -33,13 +29,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    networks:
-      - counter-net
     depends_on:
       - my-db
 
-networks:
-  counter-net:
-
 volumes:
-  mongodb-data:
+  AFSMount:
+    driver: local
+    driver_opts:
+      type: cifs
+      o: "mfsymlinks,vers=3.0,username=${AFS_NAME},password=${AFS_KEY},addr=${AFS_NAME}.file.core.windows.net"
+      device: "//${AFS_NAME}.file.core.windows.net/${AFS_CONTAINER}"
