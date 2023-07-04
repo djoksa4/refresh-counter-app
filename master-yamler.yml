@@ -10,8 +10,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - AFSMount:/data/db
-    env_file:
-      - env.env
 
   my-mongo-ui:
     image: mongo-express
